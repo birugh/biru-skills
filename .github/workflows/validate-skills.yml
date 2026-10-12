@@ -1,0 +1,32 @@
+---
+name: validate-skills
+
+# zizmor: pinned action SHA + no persisted credentials (read-only checkout)
+"on":
+  push:
+    branches: [main]
+    paths:
+      - "**/SKILL.md"
+      - "scripts/validate-skills.py"
+      - ".github/workflows/validate-skills.yml"
+  pull_request:
+    paths:
+      - "**/SKILL.md"
+      - "scripts/validate-skills.py"
+      - ".github/workflows/validate-skills.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - run: pip install pyyaml
+      - run: python3 scripts/validate-skills.py
+
