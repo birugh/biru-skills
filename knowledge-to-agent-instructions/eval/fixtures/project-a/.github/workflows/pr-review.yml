@@ -1,0 +1,78 @@
+name: PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+# Batalkan run lama saat PR di-push ulang, supaya tidak buang menit/API token.
+concurrency:
+  group: pr-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    # PR dari fork tidak menerima secrets, jadi review hanya untuk branch di repo ini.
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Claude code review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          track_progress: "true"
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Branch PR sudah di-checkout di working directory. Review diff PR ini
+            terhadap base branch, lalu tulis hasilnya dalam Bahasa Indonesia.
+
+            Area wajib dicek:
+
+            1. Keamanan
+               - Injeksi SQL/komando, input yang tidak divalidasi, secret yang
+                 bocor ke log, file, atau gambar.
+               - Periksa penanganan DSN/kredensial di skrip di bawah `scripts/`.
+
+            2. Keandalan
+               - Penanganan error dan rollback yang salah.
+               - Race condition, resource leak, transaksi yang tidak ditutup.
+
+            3. Kualitas & keterbacaan
+               - Duplikasi, penamaan, kompleksitas berlebih.
+               - Konsistensi dengan gaya kode yang sudah ada di repo.
+
+            4. Kepatuhan dokumen tim
+               - Jika PR mengubah `Dockerfile` atau file compose, wajib
+                 membandingkan perubahannya dengan checklist "Sebelum merge" di
+                 `docs/docker-best-practices.md`. Sebutkan item checklist yang
+                 belum terpenuhi, kutip nomor/bunyi itemnya.
+               - Jika PR menambah fitur, pastikan README ikut diperbarui.
+
+            5. Pengujian & dokumentasi
+               - Kasus uji yang hilang untuk perubahan perilaku.
+               - Dokumen yang jadi usang karena diff ini.
+
+            Cara melaporkan:
+            - Masalah spesifik pada baris tertentu -> komentar inline pada baris
+              itu, sertakan perbaikan konkret bila memungkinkan.
+            - Observasi umum / ringkasan -> satu komentar top-level di akhir.
+            - Urutkan temuan dari yang paling berdampak ke yang kosmetik.
+            - Bila tidak ada masalah berarti, tetap tulis ringkasan singkat
+              berisi hal positif yang kamu lihat. Jangan mengarang masalah.
+
+          claude_args: |
+            --max-turns 15
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"

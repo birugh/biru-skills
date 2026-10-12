@@ -1,0 +1,28 @@
+{
+  "threshold": 0.5,
+  "runsPerQuery": 3,
+  "shouldTrigger": [
+    { "id": "SQ01", "query": "Kita baru sepakati cara pakai image digest di Dockerfile — jadikan ini aturan permanen untuk agent." },
+    { "id": "SQ02", "query": "The team decided all DB migrations must run before deploy. Turn this into agent instructions for the project." },
+    { "id": "SQ03", "query": "Jadi kesimpulannya: jangan pernah commit langsung ke main. Simpan ini supaya agent lain juga taat." },
+    { "id": "SQ04", "query": "We just figured out the right way to structure API errors here. Can we make sure future agents follow this?" },
+    { "id": "SQ05", "query": "Codify our code-review conventions so the AI applies them automatically." },
+    { "id": "SQ06", "query": "After hours of debugging we found the flaky test only fails when the fixture DB is not reset: the right order is `pnpm db:reset && pnpm test`. I want this captured so every future agent does it the same way." },
+    { "id": "SQ07", "query": "Biar nggak kejadian lagi, jadikan kebiasaan yang tadi kita bicarakan ini bagian dari aturan ya." },
+    { "id": "SQ08", "query": "Konvensi penamaan file di repo ini adalah kebab-case. Jadikan itu aturan yang berlaku untuk semua kerja agent di repo ini, dan pastikan diterapkan mulai sekarang." },
+    { "id": "SQ09", "query": "Also, before you continue — we always run the formatter before committing; make that a lasting instruction." },
+    { "id": "SQ10", "query": "Konvensi penamaan file kita pakai kebab-case. Bolehkah ini dijadikan instruksi untuk agent?" }
+  ],
+  "shouldNotTrigger": [
+    { "id": "NQ01", "query": "Tulis dokumentasi tim tentang best practice Docker untuk wiki perusahaan." },
+    { "id": "NQ02", "query": "Review my Dockerfile for bugs." },
+    { "id": "NQ03", "query": "Jelaskan apa itu AGENTS.md dan bagaimana cara menulisnya." },
+    { "id": "NQ04", "query": "Can you write a Python script that reads a CSV and uploads each row to our postgres database?" },
+    { "id": "NQ05", "query": "Refactor utils/date.ts supaya follow best practice." },
+    { "id": "NQ06", "query": "What's the weather today?" },
+    { "id": "NQ07", "query": "Buatkan laporan review code untuk PR terakhir." },
+    { "id": "NQ08", "query": "Migrate this repo from npm to pnpm." },
+    { "id": "NQ09", "query": "Cek apakah Dockerfile kita sudah pakai image digest." },
+    { "id": "NQ10", "query": "Fix the failing test in auth.spec.ts." }
+  ]
+}
