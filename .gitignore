@@ -1,0 +1,14 @@
+plans/
+.pi
+
+# Generated evaluation artifacts (any skill's eval/)
+**/eval/results/raw/*
+**/eval/results/*.log
+**/eval/results/*.jsonl
+
+# Evaluation reports (queries-summary*.md, results/scenarios.md) are tracked on
+# purpose: they are the skill's test evidence and must stay reviewable.
+
+# Keep directory structure when needed
+!**/eval/results/.gitkeep
+!**/eval/results/raw/.gitkeep
