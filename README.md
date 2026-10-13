@@ -16,6 +16,7 @@ dipakai di harness lain (Claude Code, OpenCode, dsb). Dua catatan:
 | Skill | Fungsi | Path |
 | --- | --- | --- |
 | [knowledge-to-agent-instructions](knowledge-to-agent-instructions/SKILL.md) | Mengubah pengetahuan, best practice, standar, atau pengalaman menjadi instruksi yang benar-benar diikuti agent (AGENTS.md, supervisor rules, skills, subagents), dengan alur analisis → klarifikasi → desain → rencana → persetujuan → eksekusi → verifikasi | `knowledge-to-agent-instructions/` |
+| [skill-authoring](skill-authoring/SKILL.md) | Membuat, mengaudit, memperbaiki, dan mengevaluasi Agent Skill sesuai spesifikasi resmi agentskills.io (frontmatter, struktur, deskripsi, progressive disclosure, trigger & behavior eval), dengan mode create / audit-fix / evaluate. Pemilahan komponen (AGENTS.md/supervisor/skill/subagent) ditangani `knowledge-to-agent-instructions` | `skill-authoring/` |
 
 ## Install
 
