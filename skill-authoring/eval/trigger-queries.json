@@ -1,0 +1,28 @@
+{
+  "threshold": 0.5,
+  "runsPerQuery": 3,
+  "shouldTrigger": [
+    { "id": "S01", "query": "Buatkan agent skill buat workflow review PR kita." },
+    { "id": "S02", "query": "Our team wants a reusable skill for formatting release notes." },
+    { "id": "S03", "query": "Saya mau bikin skill baru: tiap kali ada bug yang mirip, agent harus nanya dulu sebelum fix." },
+    { "id": "S04", "query": "Package our CI conventions as an Agent Skill so future agents follow them." },
+    { "id": "S05", "query": "Audit skill `test-helper` kita: cek frontmatter sama struktur, apa udah sesuai spesifikasi resmi." },
+    { "id": "S06", "query": "Ada skill lama yang nggak kepake, tolong perbaiki biar sesuai standar resminya." },
+    { "id": "S07", "query": "Fix this skill: its description is too narrow and never triggers." },
+    { "id": "S08", "query": "Bisakah kamu evaluasi apakah skill `code-reviewer` kita beneran kepakai pas dibutuhin, sama output-nya bener?" },
+    { "id": "S09", "query": "Check how well our skill `audit-buddy` is doing: does it activate at the right moments, and is its output any good?" },
+    { "id": "S10", "query": "Skill kita nggak pernah aktif pas butuh. Periksa deskripsinya sama cek trigger-nya." }
+  ],
+  "shouldNotTrigger": [
+    { "id": "N01", "query": "Tulis dokumentasi tim tentang best practice Docker untuk wiki perusahaan." },
+    { "id": "N02", "query": "Review my Dockerfile for bugs." },
+    { "id": "N03", "query": "Jelaskan apa itu Agent Skills dan cara kerjanya." },
+    { "id": "N04", "query": "Can you write a Python script that reads a CSV and uploads each row to our postgres database?" },
+    { "id": "N05", "query": "Jangan eksekusi dulu: semua query DB wajib ada index. Jadikan ini aturan untuk agent di repo ini (AGENTS.md)." },
+    { "id": "N06", "query": "Buatkan aturan supervisor: setiap PR wajib tambah minimal satu test baru." },
+    { "id": "N07", "query": "Fix the failing test in auth.spec.ts." },
+    { "id": "N08", "query": "Migrate this repo from npm to pnpm." },
+    { "id": "N09", "query": "Bikin subagent khusus buat review PR, biar bisa jalan parallel." },
+    { "id": "N10", "query": "Buatkan catatan rapat tadi jadi ringkasan buat tim." }
+  ]
+}

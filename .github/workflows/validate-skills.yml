@@ -7,11 +7,13 @@ name: validate-skills
     branches: [main]
     paths:
       - "**/SKILL.md"
+      - "**/eval/**"
       - "scripts/validate-skills.py"
       - ".github/workflows/validate-skills.yml"
   pull_request:
     paths:
       - "**/SKILL.md"
+      - "**/eval/**"
       - "scripts/validate-skills.py"
       - ".github/workflows/validate-skills.yml"
   workflow_dispatch:
@@ -29,4 +31,3 @@ jobs:
           persist-credentials: false
       - run: pip install pyyaml
       - run: python3 scripts/validate-skills.py
-

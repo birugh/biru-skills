@@ -81,22 +81,18 @@ function loadJsonl(file) {
   }).filter(Boolean);
 }
 
-// Parse trigger-queries.md -> { shouldTrigger: [{id, query}], shouldNotTrigger: [...] }
-function parseQueriesMd() {
-  const text = readFileSync(path.join(E, "trigger-queries.md"), "utf8");
-  const should = [];
-  const shouldNot = [];
-  for (const line of text.split("\n")) {
-    const m = line.match(/^\| (S\d+|N\d+) \| (.+?) \| (?:trigger|no trigger) \|$/);
-    if (m) {
-      (m[1].startsWith("S") ? should : shouldNot).push({ id: m[1], query: m[2].replace(/\\\|/g, "|").trim() });
-    }
+// Load trigger-queries.json -> { threshold, runsPerQuery, shouldTrigger: [{id, query}], shouldNotTrigger: [...] }
+function loadCfg() {
+  try {
+    return JSON.parse(readFileSync(path.join(E, "trigger-queries.json"), "utf8"));
+  } catch (err) {
+    console.error(`trigger-queries.json unreadable: ${err.message}`);
+    process.exit(1);
   }
-  return { shouldTrigger: should, shouldNotTrigger: shouldNot, threshold: 0.5, runsPerQuery: 3 };
 }
 
 async function runQueries() {
-  const cfg = parseQueriesMd();
+  const cfg = loadCfg();
   const only = (process.env.PI_EVAL_ONLY || "").split(",").filter(Boolean);
   const outJsonl = path.join(E, "results", "queries.jsonl");
   const done = new Set(loadJsonl(outJsonl).filter((r) => r.status === "OK").map((r) => `${r.id}:${r.run}`));

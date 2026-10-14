@@ -17,6 +17,7 @@ dipakai di harness lain (Claude Code, OpenCode, dsb). Dua catatan:
 | --- | --- | --- |
 | [knowledge-to-agent-instructions](knowledge-to-agent-instructions/SKILL.md) | Mengubah pengetahuan, best practice, standar, atau pengalaman menjadi instruksi yang benar-benar diikuti agent (AGENTS.md, supervisor rules, skills, subagents), dengan alur analisis → klarifikasi → desain → rencana → persetujuan → eksekusi → verifikasi | `knowledge-to-agent-instructions/` |
 | [skill-authoring](skill-authoring/SKILL.md) | Membuat, mengaudit, memperbaiki, dan mengevaluasi Agent Skill sesuai spesifikasi resmi agentskills.io (frontmatter, struktur, deskripsi, progressive disclosure, trigger & behavior eval), dengan mode create / audit-fix / evaluate. Pemilahan komponen (AGENTS.md/supervisor/skill/subagent) ditangani `knowledge-to-agent-instructions` | `skill-authoring/` |
+| [install-prompt-authoring](install-prompt-authoring/SKILL.md) | Membuat "Install with a prompt": prompt siap-tempel di README + `docs/INSTALL-PROMPT.md` untuk AI executor di proyek lintas ekosistem, dengan gate wajib cek `INSTALL.md` milik owner (tiga opsi: pakai yang ada / ada tambahan / dibedakan) | `install-prompt-authoring/` |
 
 ## Install
 
@@ -39,7 +40,13 @@ Struktur per skill:
 ├── SKILL.md            # wajib: name = nama direktori, description ≤1024, license MIT
 ├── references/         # opsional: detail yang dimuat sesuai kebutuhan (progressive disclosure)
 └── eval/               # opsional: skenario uji + hasil
+    ├── scenarios.md           # skenario perilaku + expected behavior
+    ├── trigger-queries.json   # daftar query trigger eval (WAJIB JSON, lihat AGENTS.md)
+    ├── run-eval.mjs           # runner: queries | scenarios | all
+    └── results/               # bukti uji
 ```
+
+Konvensi lengkap (format query, cara validasi): [AGENTS.md](AGENTS.md).
 
 Aturan eval (lihat [.gitignore](.gitignore)):
 

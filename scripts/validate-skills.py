@@ -11,11 +11,14 @@ Checks (deterministic, no model involved):
   - metadata (if present): string-to-string map
   - allowed-tools (if present): space-separated string
   - skill-relative references in backticks (references|assets|scripts/...) exist
+  - eval/trigger-queries lives as JSON (AGENTS.md): no trigger-queries.md, and
+    trigger-queries.json parses with threshold/runsPerQuery/shouldTrigger/shouldNotTrigger
 
 Unknown extra fields (e.g. pi's disable-model-invocation) are allowed.
 
 Run: python3 scripts/validate-skills.py
 """
+import json
 import re
 import sys
 from pathlib import Path
@@ -99,6 +102,27 @@ def main() -> int:
         for ref in sorted(set(SKILL_REF_RE.findall(text))):
             if not (skill_md.parent / ref).exists():
                 errors.append(f"{rel}: broken reference `{ref}`")
+
+    # Repo convention (AGENTS.md): trigger query config is JSON, never markdown.
+    for md in sorted(root.rglob("eval/trigger-queries.md")):
+        errors.append(
+            f"{md.relative_to(root)}: trigger-queries must be trigger-queries.json (see AGENTS.md)"
+        )
+
+    required_cfg_keys = ("threshold", "runsPerQuery", "shouldTrigger", "shouldNotTrigger")
+    for cfg_path in sorted(root.rglob("eval/trigger-queries.json")):
+        rel = cfg_path.relative_to(root)
+        try:
+            cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            errors.append(f"{rel}: JSON parse error: {exc}")
+            continue
+        if not isinstance(cfg, dict):
+            errors.append(f"{rel}: must be a JSON object")
+            continue
+        missing = [k for k in required_cfg_keys if k not in cfg]
+        if missing:
+            errors.append(f"{rel}: missing key(s): {', '.join(missing)}")
 
     if errors:
         for err in errors:
