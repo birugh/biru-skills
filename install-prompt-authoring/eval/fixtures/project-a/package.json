@@ -1,0 +1,7 @@
+{
+  "name": "project-a",
+  "version": "1.0.0",
+  "description": "Eval fixture: no INSTALL.md",
+  "bin": { "project-a": "cli.js" },
+  "scripts": { "test": "node --test" }
+}

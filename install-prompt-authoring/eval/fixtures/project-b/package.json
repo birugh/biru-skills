@@ -1,0 +1,7 @@
+{
+  "name": "project-b",
+  "version": "1.0.0",
+  "description": "Eval fixture: owner INSTALL.md present",
+  "bin": { "project-b": "cli.js" },
+  "scripts": { "test": "node --test" }
+}
