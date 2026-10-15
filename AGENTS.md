@@ -47,8 +47,8 @@ the query file, so no number/threshold exists in two places.
 ## Workflow
 
 - Before and after creating or changing a skill: run
-  `nix develop -c python3 scripts/validate-skills.py` (toolchain terpin di
-  `flake.nix`; lihat README). Done only when it exits 0 with `OK n skill(s)
+  `nix develop -c python3 scripts/validate-skills.py` (pinned toolchain in
+  `flake.nix`; see README). Done only when it exits 0 with `OK n skill(s)
   validated against agentskills.io spec`.
 - Changing the shape of a skill (structure, name, description, instruction
   content) → make sure its eval still matches its test cases: adjust
