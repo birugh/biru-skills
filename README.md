@@ -55,7 +55,28 @@ Aturan eval (lihat [.gitignore](.gitignore)):
 - **Di-ignore** karena bisa dibuat ulang: `results/raw/` (transkrip mentah),
   `*.log`, `*.jsonl`.
 
+## Nix
+
+Repo punya `flake.nix` (input `nixpkgs` nixos-unstable + `pi`, terpin di
+`flake.lock`). Toolchain dev terpin lewat:
+
+```bash
+nix develop            # python3+pyyaml, nodejs_24, pi
+nix flake check         # jalankan validasi SKILL.md sebagai check derivation
+```
+
+di dalam shell `command -v pi` = pi dari flake; di luar shell tetap instalasi
+pi masing-masing. CI memakai `nix flake check` yang sama (tanpa
+`pip install`).
+
 ## Testing
+
+Validasi spesifikasi skill (wajib sebelum/sesudah ubah skill, lihat
+[AGENTS.md](AGENTS.md)):
+
+```bash
+nix develop -c python3 scripts/validate-skills.py   # atau: nix flake check
+```
 
 Jalankan dari direktori `eval/` skill terkait:
 

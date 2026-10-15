@@ -16,7 +16,7 @@ Checks (deterministic, no model involved):
 
 Unknown extra fields (e.g. pi's disable-model-invocation) are allowed.
 
-Run: python3 scripts/validate-skills.py
+Run: nix develop -c python3 scripts/validate-skills.py  (or: nix flake check)
 """
 import json
 import re
